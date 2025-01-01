@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>Our Special Story - Home</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- 検索エンジン回避（必要なら） -->
+  <meta name="robots" content="noindex, nofollow">
+
+  <!-- Google Fonts（lovers.htmlと統一） -->
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link 
+    href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&family=Dancing+Script:wght@600&display=swap" 
+    rel="stylesheet"
+  >
+
+  <style>
+    /* ========== リセット & 基本設定 ========== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    html, body {
+      width: 100%;
+      min-height: 100vh;
+      font-family: 'Raleway', sans-serif; 
+      scroll-behavior: smooth;
+       #fefefe /* 画像が読み込まれない時用の背景色 */
+      color #333
+      overflow-x:hidden
+    }
+    /* 
+      全体をFlexで中央寄せ。  
+      ここではbodyに直接背景画像を敷いてもOKですが、  
+      heroセクションのみ背景画像にする場合は .hero に指定します。 
+    */
+    body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* ========== Heroセクション ========== */
+    .hero {
+      width: 100%;
+      max-width: 900px;
+      text-align: center;
+      padding: 60px 20px;
+      min-height: 80vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      position: relative; /* オーバーレイ表示のため */
+      margin: 40px 0;
+      overflow: hidden;
+      
+      /* ↓↓↓ 背景画像設定 ↓↓↓ */
+      background: url("my_background.jpeg") no-repeat center center;
+      background-size: cover;
+      border-radius: 8px;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+    }
+
+    /* 
+      オーバーレイ（薄めの白を重ねてテキストを読みやすく） 
+      不要なら .overlay, .hero .overlay { display: none; } としてもOK 
+    */
+    .hero::before {
+      content: "";
+      position: absolute;
+      top: 0; 
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(255,255,255,0.5); /* 透過度合いを調整 */
+      z-index: 1;
+    }
+
+    /* Hero内テキストアニメーション */
+    .hero h1, .hero p, .password-box {
+      position: relative; /* オーバーレイより上に表示 */
+      z-index: 2;
+    }
+    .hero h1 {
+      font-family: 'Dancing Script', cursive;
+      font-size: 3rem;
+      color: #333;
+      margin-bottom: 20px;
+      animation: heroFadeDown 1.0s ease forwards;
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    .hero p {
+      font-size: 1.2rem;
+      max-width: 600px;
+      margin-bottom: 30px;
+      opacity: 0;
+      animation: heroFadeUp 1.0s 0.5s ease forwards; 
+      transform: translateY(20px);
+    }
+    @keyframes heroFadeDown {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    @keyframes heroFadeUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* ========== パスワード入力欄 & ボタン ========== */
+    .password-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      opacity: 0;
+      animation: heroFadeUp 1.0s 0.8s ease forwards; 
+      transform: translateY(20px);
+    }
+    .password-input {
+      font-size: 1rem;
+      padding: 12px;
+      width: 250px;
+      border: 1px solid #ccc;
+      border-radius: 30px;
+      text-align: center;
+      outline: none;
+      transition: border 0.2s;
+    }
+    .password-input:focus {
+      border-color: #999;
+    }
+    .enter-btn {
+      display: inline-block;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #fff;
+      background: #007BFF;
+      padding: 12px 24px;
+      border-radius: 30px;
+      text-decoration: none;
+      transition: background-color 0.3s ease;
+      cursor: pointer;
+    }
+    .enter-btn:hover {
+      background: #0056b3;
+    }
+
+    /* ========== レスポンシブ対応 ========== */
+    @media screen and (max-width: 480px) {
+      .hero {
+        margin: 20px 0;
+        padding: 40px 20px;
+      }
+      .hero h1 {
+        font-size: 2.2rem;
+      }
+      .hero p {
+        font-size: 1rem;
+        margin-bottom: 20px;
+        width: 80%;
+      }
+      .enter-btn {
+        font-size: 1rem;
+        padding: 10px 20px;
+      }
+      .password-input {
+        width: 200px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="hero">
+    <!-- タイトル -->
+    <h1>Welcome to Our Story</h1>
+    <!-- 説明文 -->
+    <p>
+      パスワードは記念日
+    </p>
+
+    <!-- パスワード入力 + ボタン -->
+    <div class="password-box">
+      <input 
+        type="password" 
+        class="password-input" 
+        id="passField" 
+        placeholder="Enter Password" 
+      />
+      <button class="enter-btn" onclick="checkPassword()">
+        Enter
+      </button>
+    </div>
+  </div>
+
+  <script>
+    function checkPassword() {
+      const correctPassword = "1220"; // 実際のパスワードを設定
+      const entered = document.getElementById('passField').value;
+      
+      if (entered === correctPassword) {
+        // lovers.htmlへ遷移
+        window.location.href = "lovers.html";
+      } else {
+        alert("パスワードが違います");
+      }
+    }
+  </script>
+</body>
+</html>
